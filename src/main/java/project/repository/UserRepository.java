@@ -30,6 +30,10 @@ public interface UserRepository extends JpaRepository<User, Long>, PagingAndSort
             "LOWER(u.parentName) LIKE %?1% OR LOWER(CONCAT(u.status, '')) LIKE %?1% ORDER BY u.status, u.username")
     Page<UserDto> findAllSearch(String search, Pageable paging);
 
+    @Query("SELECT new project.dto.UserDto(u) FROM User u WHERE LOWER(u.username) LIKE %?1% OR LOWER(u.lastName) LIKE %?1% OR LOWER(u.firstName) LIKE %?1% OR " +
+            "LOWER(u.parentName) LIKE %?1% OR LOWER(CONCAT(u.status, '')) LIKE %?1% ORDER BY u.status, u.username")
+    Page<UserDto> findAllSearchd(String search, Pageable paging);
+
 //    @Query(value = "SELECT u FROM User u WHERE u.employee.id = ?1 AND u.status = ?2")
 //    User findByEmployeeIdAndStatus(Long id, Status active);
 
